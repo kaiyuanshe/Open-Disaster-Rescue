@@ -1,13 +1,13 @@
 version: '3'
 
 networks:
-  idea2app:
+  kaiyuanshe:
 
 services:
-  lark-next-bootstrap-ts:
-    image: idea2app/lark-next-bootstrap-ts
+  open-disaster-rescue:
+    image: kaiyuanshe/open-disaster-rescue
     networks:
-      - idea2app
+      - kaiyuanshe
     healthcheck:
       test: ['CMD-SHELL', 'curl -f http://localhost:3000/ || exit 1']
       interval: 3s
@@ -34,11 +34,11 @@ services:
 
   caddy:
     depends_on:
-      - lark-next-bootstrap-ts
+      - open-disaster-rescue
     image: caddy
     ports:
       - 80:80
       - 443:443
     networks:
-      - idea2app
-    command: caddy reverse-proxy --from your.domain.com --to lark-next-bootstrap-ts:3000
+      - kaiyuanshe
+    command: caddy reverse-proxy --from your.domain.com --to open-disaster-rescue:3000

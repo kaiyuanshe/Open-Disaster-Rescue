@@ -1,5 +1,5 @@
 {
-  "name": "@idea2app/lark-next-bootstrap-ts",
+  "name": "@kaiyuanshe/open-disaster-rescue",
   "version": "2.1.0",
   "description": "Lark project scaffold based on TypeScript, React, Next.js, Bootstrap & Workbox.",
   "private": true,
@@ -106,7 +106,7 @@
     "start": "next start",
     "lint": "next lint  &&  tsc --noEmit",
     "test": "lint-staged  &&  npm run lint",
-    "pack-image": "docker build -t idea2app/lark-next-bootstrap-ts:latest .",
-    "container": "docker rm -f lark-next-bootstrap-ts  &&  docker run --name lark-next-bootstrap-ts -p 3000:3000 -d idea2app/lark-next-bootstrap-ts:latest"
+    "pack-image": "docker build -t kaiyuanshe/open-disaster-rescue:latest .",
+    "container": "docker rm -f open-disaster-rescue  &&  docker run --name open-disaster-rescue -p 3000:3000 -d kaiyuanshe/open-disaster-rescue:latest"
   }
 }
