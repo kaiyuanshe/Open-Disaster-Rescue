@@ -1,4 +1,4 @@
-# open-disaster-rescue
+# Open Disaster Rescue
 
 [Lark][0] project scaffold based on [TypeScript][2], [React][1], [Next.js][3], [Bootstrap][4] & [Workbox][5]. And this project bootstrapped with [`create-next-app`][6].
 

@@ -1,48 +1,56 @@
 import { observer } from 'mobx-react';
-import { compose, translator } from 'next-ssr-middleware';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { cache, compose, errorLogger, translator } from 'next-ssr-middleware';
+import { FC } from 'react';
+import { Badge, Card, Col, Container, Row } from 'react-bootstrap';
+import { formatDate } from 'web-utility';
 
 import { GitCard } from '../components/Git/Card';
 import { PageHead } from '../components/Layout/PageHead';
+import { Disaster, DisasterModel } from '../models/Disaster';
 import { i18n, t } from '../models/Translation';
 import styles from '../styles/Home.module.less';
-import { framework, mainNav } from './api/home';
+import { framework } from './api/home';
 
-export const getServerSideProps = compose(translator(i18n));
+interface HomePageProps {
+  disasters: Disaster[];
+}
 
-const HomePage = observer(() => (
+export const getServerSideProps = compose(
+  cache(),
+  errorLogger,
+  translator(i18n),
+  async () => {
+    const disasters = await new DisasterModel().getList({}, 1, 3);
+
+    return { props: { disasters } };
+  },
+);
+
+const HomePage: FC<HomePageProps> = observer(({ disasters }) => (
   <Container as="main" className={styles.main}>
     <PageHead />
 
     <h1 className={`m-0 text-center ${styles.title}`}>
-      {t('welcome_to')}
-      <a className="text-primary mx-2" href="https://nextjs.org">
-        Next.js!
-      </a>
+      {t('open_disaster_rescue')}
     </h1>
 
-    <p className={`text-center fs-4 ${styles.description}`}>
-      {t('get_started_by_editing')}
-      <code className={`mx-2 rounded-3 bg-light ${styles.code}`}>
-        pages/index.tsx
-      </code>
-    </p>
-
-    <Row className="g-4" xs={1} sm={2} md={4}>
-      {mainNav().map(({ link, title, summary }) => (
-        <Col key={link}>
-          <Card
-            className={`h-100 p-4 rounded-3 border ${styles.card}`}
-            tabIndex={-1}
-          >
+    <h2 className="my-4 text-center">{t('disaster_rescue_history')}</h2>
+    <Row className="g-4" xs={1} sm={2} md={3}>
+      {disasters.map(({ id, name, type, startedAt, endedAt }) => (
+        <Col key={id + ''}>
+          <Card className="h-100">
             <Card.Body>
               <Card.Title as="h2" className="fs-4 mb-3">
-                <a href={link} className="stretched-link">
-                  {title} &rarr;
+                <Badge className="me-2">{type + ''}</Badge>
+                <a href={`/disaster/${id}`} className="stretched-link">
+                  {name + ''}
                 </a>
               </Card.Title>
-              <Card.Text className="fs-5">{summary}</Card.Text>
             </Card.Body>
+            <Card.Footer className="text-center">
+              {formatDate(+startedAt!, 'YYYY-MM-DD')} ~{' '}
+              {formatDate(+endedAt!, 'YYYY-MM-DD')}
+            </Card.Footer>
           </Card>
         </Col>
       ))}
