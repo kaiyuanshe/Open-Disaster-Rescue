@@ -1,6 +1,9 @@
 import { IDType } from 'mobx-restful';
 
 export default {
+  open_disaster_rescue: 'Open Disaster Rescue',
+  disaster_rescue_history: 'Disaster Rescue History',
+
   welcome_to: 'Welcome to',
   get_started_by_editing: 'Get started by editing',
   upstream_projects: 'Upstream projects',

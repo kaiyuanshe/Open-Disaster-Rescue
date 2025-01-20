@@ -1,6 +1,9 @@
 import { IDType } from 'mobx-restful';
 
 export default {
+  open_disaster_rescue: '開放救災系統',
+  disaster_rescue_history: '救災歷史',
+
   welcome_to: '歡迎使用',
   get_started_by_editing: '開始你的專案吧，編輯',
   upstream_projects: '上游專案',
